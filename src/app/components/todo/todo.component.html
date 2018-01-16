@@ -1,0 +1,59 @@
+<div class="row">
+    <!-- /.col-lg-6 -->
+    <div class="col-lg-12">
+        <div class="input-group">
+            <input type="text" class="form-control" #todoText (keyup.enter)="add(todoText)">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button" (click)="add(todoText)">Ekle</button>
+          </span>
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+<!-- /.row -->
+
+<div class="panel panel-default" *ngIf="todos.length>0;else todoEmptyTmpl">
+    <div class="panel-heading">Panel heading</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Görev</th>
+                <th>Görev Eklenme Tarihi</th>
+                <th>Görevi Pasif Yap</th>
+                <th>Görev Düzenle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let todo of todos; let i=index" [style.text-decoration]="todo.active ? '' : 'line-through'">
+                <td>{{ i + 1 }}</td>
+                <td>{{ todo.text }}</td>
+                <td>{{ todo.createdAt | date: 'dd-MM-yyyy/hh:mm'}}</td>
+                <td>
+                    <a class="btn btn-xs" (click)="state(i)" style="font-size: 17px" [style.text-decoration]="todo.active ? '' : 'line-through'"><div *ngIf="todo.active;then pasive;else active" ></div></a>
+                </td>
+                <td>
+                    <a routerLink="/todo/edit/{{i}}"  style="font-size: 17px" [style.text-decoration]="todo.active ? '' : 'line-through'">Edit</a>
+                </td>
+                <td><button class="btn btn-danger" (click)="delete(i)">Sil</button></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<ng-template #todoEmptyTmpl>
+    <div class="alert alert-danger" role="alert">
+        Yapılacak görev yok.
+    </div>
+</ng-template>
+
+<ng-template #active>
+    Aktif Yap
+</ng-template>
+
+<ng-template #pasive>
+    Pasif Yap
+</ng-template>

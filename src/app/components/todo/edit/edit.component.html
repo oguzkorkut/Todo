@@ -1,0 +1,11 @@
+<h4 class="page-header">Todo Detail</h4>
+
+<form #todoForm="ngForm" (ngSubmit)="validate(todoForm)">
+    <div class="form-group" [class.has-error]="text.invalid&&text.dirty">
+        <label class="control-label" for="text">Full Name</label>
+        <input #text="ngModel" type="text" class="form-control" id="text" name="text" [(ngModel)]="model.text" required>
+        <span *ngIf="text.invalid&&text.dirty" class="help-block">Görev zorunludur</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="todoForm.invalid">Kaydet</button>
+</form>
